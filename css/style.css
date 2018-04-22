@@ -168,6 +168,7 @@ button:hover {
 	}
 	.col {
 		float: left;
+		margin-bottom: 1em;
 	}
 	.col + .col {
 		margin-left: 2.5%;
