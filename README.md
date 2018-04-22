@@ -1,8 +1,17 @@
 # techdegree-project-3
 
-One of the reasons the code is long is I have used JS for styling, because conditional CSS styling only works if I force reload the page. Force reloading the page will also mean the user loses their progress when filling in the form so that isn't an option. If you can think of another way please let me know on the Team TreeHouse Slack group. or raise pull request, or hit me up via twitter @jacobsilverman.
+Suggested Improvements:
 
-Project Instructions (9 steps)
+1. Code is too long. One of the reasons the code is long is I have used JS for styling. Conditional CSS styling only works if I force reload the page and that will result in the user losing their progress when filling in the form so that isn't an option. Is there another way?
+
+2. Use of classes to enable/disable the register button. I have a bunch of if statements that if true do nothing and if false add a 'btnDisabled' class to the register button. Then I have a final if statement that checks if the button has that class and if it does then I 'preventDefault' but if it doesn't i enable submit and 'alert' register success. There is probably a better way to do do both: 
+- consolidate the if statements with &&
+- determine if the button should be disabled or not
+But right now my code works and i've spent enough time on it so if I can pass an move on then it's good enough!
+
+If you have more suggested improvements or solutions to the above please let me know on the Team TreeHouse Slack group, or hit me up via twitter @jacobsilverman :)
+
+Project Instructions & Features (9 steps)
 
 1. Set focus on the first text field
 - When the page loads, give focus to the first text field
