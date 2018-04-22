@@ -2,39 +2,137 @@ $(document).ready(function () {
     /* When the page loads, give focus to the first text field */
     $('input:text:visible:first').focus();
     /* When the page loads, hide the other-title input field */
-    $('.container div.other-title').hide();
-    /* Hide the "Color" label and select menu until a T-Shirt design is selected from the "Design" menu. */
-    $('form fieldset[class="shirt"] div[id="colors-js-puns"]').hide();
+    $('div.other-title').hide();
+    /* Hide the "Color" label and select menu until a T-Shirt design is selected */
+    $('fieldset.shirt div#colors-js-puns').hide();
     let totalCost = 0;
+    /* Add the total in javascript because if JS disabled it won't work */
     $('.activities').append("<p id='p2'> Total Cost Will Be: $0 </p>");
+    /* hide fields with JS so they appear when JS disabled */
     $('div.credit-card').show();
     $('div.paypal').hide();
     $('div.bitcoin').hide();
     /* If any validation errors exist, prevent the user from submitting the form */
-    $('.container form button[type="submit"]').click(function(e){
-        $.each($('.container small'), function () {
-            if ($(this).prop('innerHTML').indexOf("valid") === -1) {
-                $('.container form button[type="submit"]')
-                .css('border', '1px solid red');
-                e.preventDefault();
-            };
-        });
+    $('button[type="submit"]').click(function(e){
+        let errorElement = $();
+        /* required fields */
+        if ($('input#name').hasClass('validInput')) {
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('input#name').hasClass('validInput'), '1')
+        } else {
+            $('button[type="submit"]').addClass('btnDisable');
+            // console.log($('input#name'));
+        }
+        if ($('.container input[id="mail"]').hasClass('validInput')){
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('.container input[id="mail"]').hasClass('validInput'), '2')
+        } else {
+            $('button[type="submit"]').addClass('btnDiasabled');
+            // console.log($('.container input[id="mail"]'));
+        }
+        if ($('select#title').hasClass('validSelection')){
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('select#title').hasClass('validSelection'), '3');
+        } else {
+            $('button[type="submit"]').addClass('btnDiasabled');
+            // console.log($('select#title'));
+        }
+        if ($('.container input[id="other-title"]').is(":visible")){
+            if ($('.container input[id="other-title"]').hasClass('validInput')){
+                $('button[type="submit"]').removeClass('btnDiasabled');
+                // console.log($('.container input[id="other-title"]').hasClass('validInput'), '4')
+            } else {
+                $('button[type="submit"]').addClass('btnDiasabled');
+                // console.log($('.container input[id="other-title"]'));
+            }
+        } else {
+            // console.log('skip 4')
+        }
+        if ($('.container select[id="size"]').hasClass('validSelection')){
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('.container select[id="size"]').hasClass('validSelection'), '5')
+        } else {
+            $('button[type="submit"]').addClass('btnDiasabled');
+            // console.log($('.container select[id="size"]'));
+        }
+        if ($('.container select[id="design"]').hasClass('validSelection')) {
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('.container select[id="design"]').hasClass('validSelection'), '6')
+        } else {
+            $('button[type="submit"]').addClass('btnDiasabled');
+            // console.log($('.container select[id="design"]'));
+        }
+        if ($('.container select[id="color"]').hasClass('validSelection')) {
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('.container select[id="color"]').hasClass('validSelection'), '7')
+        } else {
+            $('button[type="submit"]').addClass('btnDiasabled');
+            // console.log($('.container select[id="color"]'));
+        }
+        if ($('.activities').hasClass('validActivities')){
+            $('button[type="submit"]').removeClass('btnDiasabled');
+            // console.log($('.activities').hasClass('validActivities'), '8');
+        } else {
+            $('button[type="submit"]').addClass('btnDiasabled');
+            // console.log($('.activities'));
+        }
+        if ($('.container form fieldset input[id="cc-num"]').is(":visible")) {
+            if ($('.container form fieldset input[id="cc-num"]').hasClass('validInput')) {
+                // console.log($('.container form fieldset input[id="cc-num"]').hasClass('validInput'), '9');
+                $('button[type="submit"]').removeClass('btnDiasabled');
+            } else {
+                $('button[type="submit"]').addClass('btnDiasabled');
+                // console.log($('.container form fieldset input[id="cc-num"]'));
+            }
+        } else {
+            // console.log('skip 9')
+        }
+        if ($('.container form fieldset input[id="zip"]').is(":visible")) {
+            if ($('.container form fieldset input[id="zip"]').hasClass('validInput')) {
+                $('button[type="submit"]').removeClass('btnDiasabled');
+                // console.log($('.container form fieldset input[id="zip"]').hasClass('validInput'), '10');
+            } else {
+                $('button[type="submit"]').addClass('btnDiasabled');
+                // console.log($('.container form fieldset input[id="zip"]'));
+            }
+        } else {
+            // console.log('skip 10')
+        }
+        if ($('.container form fieldset input#cvv').is(":visible")) {
+            if ($('.container form fieldset input#cvv').hasClass('validInput')) {
+                $('button[type="submit"]').removeClass('btnDiasabled');
+                // console.log($('.container form fieldset input#cvv').hasClass('validInput'), '11');
+            } else {
+                $('button[type="submit"]').addClass('btnDiasabled');
+                // console.log($('.container form fieldset input#cvv'));
+            }
+        } else {
+            // console.log('skip 11')
+        }
+        if ($('button[type="submit"]').hasClass('btnDiasabled')){
+            e.preventDefault();
+        } else {
+            // $('button[type="submit"]').addClass('btnEnabled');
+            alert('You are registered!')
+        }
     });
 
-    $('.container input[id="name"]').change(function(){
+    $('input#name').change(function(){
         /* There should be an error indication for the name field */
         /* Name field can't be blank */
-        if ($('.container input[id="name"]').val().length === 0) {
+        if ($('input#name').val().length === 0) {
             $('.container small[class="name-msg"]')
                 .prop('innerHTML',
                 '<small class="name-msg">Cannot be empty.</small>');
         } else {
-            $('.container input[id="name"]')
+            $('input#name')
                 .css('borderColor', 'green');
             $('.container small[class="name-msg"]')
                 .prop('innerHTML', 
                 '<small class="name-msg">Valid.</small>')
                 .css('color', 'green');
+            $('input#name')
+                .addClass('validInput');
         }
         ;
     });    
@@ -63,20 +161,23 @@ $(document).ready(function () {
                 .prop('innerHTML', '<small class="mail-msg">Valid.</small>')
                 .css('color', 'green');
             $('.container input[id="mail"]')
-                .css('borderColor', 'green');
+                .css('borderColor', 'green')
+                .addClass('validInput');
         }
     });
 
-    $('.container select#title').change(function(){
+    $('select#title').change(function(){
         $('.container small[class="title-msg"]')
             .prop('innerHTML', '<small class="title-msg">Valid.</small>')
             .css('color', 'green');
+        $('select#title')
+            .addClass('validSelection');
         if ($(this).find("option:selected").attr("value") === 'other'){
-            $('.container div.other-title').show();
+            $('div.other-title').show();
         }
     });
 
-    $('.container div.other-title').change(function(){
+    $('div.other-title').change(function(){
         if ($('.container input[id="other-title"]')
                 .val().length === 0) {
             $('.container input[id="other-title"]')
@@ -93,7 +194,8 @@ $(document).ready(function () {
                 .css('color', 'red');
         } else {
             $('.container input[id="other-title"]')
-                .css('borderColor', 'green');
+                .css('borderColor', 'green')
+                .addClass('validInput');
             $('.container small[class="other-title-msg"]')
                 .prop('innerHTML', '<small class="other-title-msg">Valid.</small>')
                 .css('color', 'green');
@@ -102,13 +204,17 @@ $(document).ready(function () {
 
     /* The "T-Shirt Info” section of the form is valid when a selection has been made for each option selector. The register button can only be pressed when all sections are validated. */
 
-    $('fieldset[class="shirt"]').change(function(){
+    $('fieldset.shirt').change(function(){
         if ( ($('form select[id="size"]').find(":selected").text() !== 'Select Size')
             && ($('form select[id="design"]').find(":selected").text() !== 'Select Theme')
             && ($('form select[id="color"]').find(":selected").text() !== 'Select Color') ){
-            $('.container input[id="shirt"]')
-                .css('borderColor', 'green');
-            $('.container small[class="shirt-msg"]')
+            $('.container select[id="size"]')
+                .addClass('validSelection');
+            $('.container select[id="design"]')
+                .addClass('validSelection');
+            $('.container select[id="color"]')
+                .addClass('validSelection');
+            $('.container small.shirt-msg')
                 .prop('innerHTML', '<small class="shirt-msg">Valid.</small>')
                 .css('color', 'green');
         } else {
@@ -120,18 +226,18 @@ $(document).ready(function () {
     });
 
     $('form select[id="design"]').change(function(){
-        $('form fieldset[class="shirt"] div[id="colors-js-puns"]')
+        $('form fieldset.shirt div#colors-js-puns')
             .show();
     });
 
-    $('form fieldset[class="shirt"] select[id="design"]').change(function () {
+    $('form fieldset.shirt select[id="design"]').change(function () {
         var value = $(this).find("option:selected").attr("value");
         switch (value) {
             case "js puns":
             /* For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu. eg. If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."  */
                 $("#color option:contains('Cornflower Blue (JS Puns shirt only)')")
                     .prop('selected', true);
-                $('form fieldset[class="shirt"] div[id="colors-js-puns"]').show();
+                $('form fieldset.shirt div#colors-js-puns').show();
                 $("#color option:contains('JS Puns shirt only')")
                     .show();
                 $("#color option:contains('I ♥ JS shirt only')")
@@ -142,7 +248,7 @@ $(document).ready(function () {
             display "Tomato," "Steel Blue," and "Dim Grey." */
                 $("#color option:contains('Tomato (I ♥ JS shirt only)')")
                     .prop('selected', true);
-                $('form fieldset[class="shirt"] div[id="colors-js-puns"]').show();
+                $('form fieldset.shirt div#colors-js-puns').show();
                 $("#color option:contains('JS Puns shirt only')")
                     .hide();
                 $("#color option:contains('I ♥ JS shirt only')")
@@ -163,7 +269,9 @@ $(document).ready(function () {
                 '<small class="activity-msg">You must select at least one.' +
                 ' Uncheck checkbox to clear all selection(s).</small>')
                 .css('color', 'red');
+            $('.activities').removeClass('validActivities');
         } else {
+            $('.activities').addClass('validActivities');
             $('.activities small[class="activity-msg"]')
             .prop('innerHTML', 
                 '<small class="activity-msg">Valid.</small>')
@@ -171,6 +279,7 @@ $(document).ready(function () {
         }
         /* When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled. */
         if (!$(event.target).is(':checked')) {
+            $('.activities').removeClass('validActivities');
             if ($(event.target).prop('name') === 'all'){
                 totalCost -= 200;
             } else {
@@ -276,6 +385,8 @@ $(document).ready(function () {
                 .prop('innerHTML',
                 '<small class="cc-msg">Valid.</small>')
                 .css('color', 'green');
+            $('.container form fieldset input[id="cc-num"]')
+                .addClass('validInput');
         }
     });
     /* There should be an error indication for the zip code */
@@ -286,6 +397,8 @@ $(document).ready(function () {
                 .prop('innerHTML',
                 '<small class="zip-msg">Valid.</small>')
                 .css('color', 'green');
+            $('.container form fieldset input[id="zip"]')
+                .addClass('validInput');
         } else {
             $('.container small.zip-msg')
                 .prop('innerHTML',
@@ -295,16 +408,20 @@ $(document).ready(function () {
     });
 
     /* There should be an error indication for the CVV */
-    $('.container form fieldset input[id="cvv"]').change(function(){
+    $('.container form fieldset input#cvv').change(function(){
         /* The CVV should only accept a number that is exactly 3 digits long */
         if ($(this).val().length === 3) {
             $('.container small.cvv-msg')
             .prop('innerHTML', '<small class="zip-msg">Valid.</small>')
             .css('color', 'green');
+            $('.container form fieldset input#cvv')
+                .addClass('validInput');
+            console.log($(this), 'cvv check length val.length is 3');
         } else {
             $('.container small.cvv-msg')
             .prop('innerHTML', '<small class="zip-msg">Must be 3-digits.</small>')
             .css('color', 'red');
+            console.log($(this), 'cvv check check');
         }  
     })
 
