@@ -17,102 +17,79 @@ $(document).ready(function () {
         let errorElement = $();
         /* required fields */
         if ($('input#name').hasClass('validInput')) {
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('input#name').hasClass('validInput'), '1')
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
             $('button[type="submit"]').addClass('btnDisable');
-            // console.log($('input#name'));
         }
         if ($('.container input[id="mail"]').hasClass('validInput')){
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('.container input[id="mail"]').hasClass('validInput'), '2')
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDiasabled');
-            // console.log($('.container input[id="mail"]'));
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('select#title').hasClass('validSelection')){
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('select#title').hasClass('validSelection'), '3');
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDiasabled');
-            // console.log($('select#title'));
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container input[id="other-title"]').is(":visible")){
             if ($('.container input[id="other-title"]').hasClass('validInput')){
-                $('button[type="submit"]').removeClass('btnDiasabled');
-                // console.log($('.container input[id="other-title"]').hasClass('validInput'), '4')
+                $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                $('button[type="submit"]').addClass('btnDiasabled');
-                // console.log($('.container input[id="other-title"]'));
+                $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
-            // console.log('skip 4')
+            // do nothing
         }
         if ($('.container select[id="size"]').hasClass('validSelection')){
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('.container select[id="size"]').hasClass('validSelection'), '5')
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDiasabled');
-            // console.log($('.container select[id="size"]'));
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container select[id="design"]').hasClass('validSelection')) {
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('.container select[id="design"]').hasClass('validSelection'), '6')
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDiasabled');
-            // console.log($('.container select[id="design"]'));
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container select[id="color"]').hasClass('validSelection')) {
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('.container select[id="color"]').hasClass('validSelection'), '7')
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDiasabled');
-            // console.log($('.container select[id="color"]'));
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.activities').hasClass('validActivities')){
-            $('button[type="submit"]').removeClass('btnDiasabled');
-            // console.log($('.activities').hasClass('validActivities'), '8');
+            $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDiasabled');
-            // console.log($('.activities'));
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container form fieldset input[id="cc-num"]').is(":visible")) {
             if ($('.container form fieldset input[id="cc-num"]').hasClass('validInput')) {
-                // console.log($('.container form fieldset input[id="cc-num"]').hasClass('validInput'), '9');
-                $('button[type="submit"]').removeClass('btnDiasabled');
+                $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                $('button[type="submit"]').addClass('btnDiasabled');
-                // console.log($('.container form fieldset input[id="cc-num"]'));
+                $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
-            // console.log('skip 9')
+            // do nothing
         }
         if ($('.container form fieldset input[id="zip"]').is(":visible")) {
             if ($('.container form fieldset input[id="zip"]').hasClass('validInput')) {
-                $('button[type="submit"]').removeClass('btnDiasabled');
-                // console.log($('.container form fieldset input[id="zip"]').hasClass('validInput'), '10');
+                $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                $('button[type="submit"]').addClass('btnDiasabled');
-                // console.log($('.container form fieldset input[id="zip"]'));
+                $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
-            // console.log('skip 10')
+            // do nothing
         }
         if ($('.container form fieldset input#cvv').is(":visible")) {
             if ($('.container form fieldset input#cvv').hasClass('validInput')) {
-                $('button[type="submit"]').removeClass('btnDiasabled');
-                // console.log($('.container form fieldset input#cvv').hasClass('validInput'), '11');
+                $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                $('button[type="submit"]').addClass('btnDiasabled');
-                // console.log($('.container form fieldset input#cvv'));
+                $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
-            // console.log('skip 11')
+            // do nothing
         }
-        if ($('button[type="submit"]').hasClass('btnDiasabled')){
+        if ($('button[type="submit"]').hasClass('btnDisabled')){
             e.preventDefault();
         } else {
-            // $('button[type="submit"]').addClass('btnEnabled');
             alert('You are registered!')
         }
     });
@@ -416,12 +393,10 @@ $(document).ready(function () {
             .css('color', 'green');
             $('.container form fieldset input#cvv')
                 .addClass('validInput');
-            console.log($(this), 'cvv check length val.length is 3');
         } else {
             $('.container small.cvv-msg')
             .prop('innerHTML', '<small class="zip-msg">Must be 3-digits.</small>')
             .css('color', 'red');
-            console.log($(this), 'cvv check check');
         }  
     })
 

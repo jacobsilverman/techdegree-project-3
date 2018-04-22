@@ -1,26 +1,25 @@
 # techdegree-project-3
 
-Project Instructions
-To complete this project, follow the instructions below. If you get stuck, ask a question in the community.
+One of the reasons the code is long is I have used JS for styling, because conditional CSS styling only works if I force reload the page. Force reloading the page will also mean the user loses their progress when filling in the form so that isn't an option. If you can think of another way please let me know on the Team TreeHouse Slack group. or raise pull request, or hit me up via twitter @jacobsilverman.
 
-9 steps
+Project Instructions (9 steps)
 
 1. Set focus on the first text field
-When the page loads, give focus to the first text field
+- When the page loads, give focus to the first text field
 
 2. ”Job Role” section of the form:
-A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
-Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
+- A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
+- Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
 
 3. ”T-Shirt Info” section of the form:
-For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu.
-If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
+- For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu.
+- If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
+- If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
 
 4. ”Register for Activities” section of the form:
-Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
-When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
+- Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
+- When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
+- As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
 
 5. Payment Info section of the form:
 Display payment sections based on the payment option chosen in the select menu
