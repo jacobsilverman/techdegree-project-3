@@ -17,53 +17,71 @@ $(document).ready(function () {
         let errorElement = $();
         /* required fields */
         if ($('input#name').hasClass('validInput')) {
+            console.log($('input#name').hasClass('validInput'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('input#name').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisable');
         }
         if ($('.container input[id="mail"]').hasClass('validInput')){
+            console.log($('.container input[id="mail"]').hasClass('validInput'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('.container input[id="mail"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('select#title').hasClass('validSelection')){
+            console.log($('select#title').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('select#title').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container input[id="other-title"]').is(":visible")){
             if ($('.container input[id="other-title"]').hasClass('validInput')){
+                console.log($('.container input[id="other-title"]').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
+                // console.log($('.container input[id="other-title"]').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
             // do nothing
         }
         if ($('.container select[id="size"]').hasClass('validSelection')){
+            console.log($('.container select[id="size"]').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('.container select[id="size"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container select[id="design"]').hasClass('validSelection')) {
+            console.log($('.container select[id="design"]').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('.container select[id="design"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container select[id="color"]').hasClass('validSelection')) {
+            console.log($('.container select[id="color"]').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('.container select[id="color"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.activities').hasClass('validActivities')){
+            console.log($('.activities').hasClass('validActivities'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
+            // console.log($('.activities').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container form fieldset input[id="cc-num"]').is(":visible")) {
             if ($('.container form fieldset input[id="cc-num"]').hasClass('validInput')) {
+                console.log($('.container form fieldset input[id="cc-num"]').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
+                // console.log($('.container form fieldset input[id="cc-num"]').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
@@ -71,8 +89,10 @@ $(document).ready(function () {
         }
         if ($('.container form fieldset input[id="zip"]').is(":visible")) {
             if ($('.container form fieldset input[id="zip"]').hasClass('validInput')) {
+                console.log($('.container form fieldset input[id="zip"]').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
+                // console.log($('.container form fieldset input[id="zip"]').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
@@ -80,14 +100,20 @@ $(document).ready(function () {
         }
         if ($('.container form fieldset input#cvv').is(":visible")) {
             if ($('.container form fieldset input#cvv').hasClass('validInput')) {
+                console.log($('.container form fieldset input#cvv').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
+                // console.log($('.container form fieldset input#cvv').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
             // do nothing
         }
         if ($('button[type="submit"]').hasClass('btnDisabled')){
+            $('.container small.submit-msg')
+                .prop('innerHTML', 
+                '<small class="submit-msg">Form incomplete.</small>')
+                .css('color', 'red');
             e.preventDefault();
         } else {
             alert('You are registered!')
@@ -130,7 +156,7 @@ $(document).ready(function () {
                 .css('borderColor', 'red');
         } else if (!isEmail($('.container fieldset input#mail').val())) {
             $('.container small[class="mail-msg"]')
-                .prop('innerHTML', '<small class="mail-msg">Not a valid email format.</small>');
+                .prop('innerHTML', '<small class="mail-msg">Not an email format.</small>');
             $('.container input[id="mail"]')
                 .css('borderColor', 'red');
         } else {
@@ -254,49 +280,69 @@ $(document).ready(function () {
                 '<small class="activity-msg">Valid.</small>')
                 .css('color', 'green');
         }
+        const abilityArray = [false, false, false, false, false, false, false];
         /* When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled. */
         if (!$(event.target).is(':checked')) {
-            $('.activities').removeClass('validActivities');
-            if ($(event.target).prop('name') === 'all'){
-                totalCost -= 200;
-            } else {
-                totalCost -= 100;
+            switch ($(event.target).prop('name')) {
+                case 'all':
+                    totalCost -= 200;
+                    break;
+                case 'js-frameworks':
+                    totalCost -= 100;
+                    abilityArray[3] = false;
+                    break;
+                case 'js-libs':
+                    totalCost -= 100;
+                    abilityArray[4] = false;
+                    break;
+                case 'express':
+                    totalCost -= 100;
+                    abilityArray[1] = false;
+                    break;
+                case 'node':
+                    totalCost -= 100;
+                    abilityArray[2] = false;
+                    break;
+                case 'build-tools':
+                    totalCost -= 100;
+                    break;
+                case 'npm':
+                    totalCost -= 100;
+                    break;
+                default:
+                    totalCost -= 100;
+                    break;
             }
-            abilityArray = [false, false, false, false, false, false, false];
         } else if ($(event.target).is(':checked')){
             /* As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300. */
             switch ($(event.target).prop('name')) {
                 case 'all':
                     totalCost += 200;
-                    abilityArray = [false, false, false, false, false, false, false];
                     break;
                 case 'js-frameworks':
                     totalCost += 100;
-                    abilityArray = [false, false, false, true, false, false, false];
+                    abilityArray[3] = true;
                     break;
                 case 'js-libs':
                     totalCost += 100;
-                    abilityArray = [false, false, false, false, true, false, false];
+                    abilityArray[4] = true;
                     break;
                 case 'express':
                     totalCost += 100;
-                    abilityArray = [false, true, false, false, false, false, false];
+                    abilityArray[1] = true;
                     break;
                 case 'node':
                     totalCost += 100;
-                    abilityArray = [false, false, true, false, false, false, false];
+                    abilityArray[2] = true;
                     break;
                 case 'build-tools':
                     totalCost += 100;
-                    abilityArray = [false, false, false, false, false, false, false];
                     break;
                 case 'npm':
                     totalCost += 100;
-                    abilityArray = [false, false, false, false, false, false, false];
                     break;
                 default:
                     totalCost += 100;
-                    abilityArray = [false, false, false, false, false, false, false];
                     break;
             }
         }
