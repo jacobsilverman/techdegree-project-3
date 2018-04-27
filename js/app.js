@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
     /* When the page loads, give focus to the first text field */
     $('input:text:visible:first').focus();
     /* When the page loads, hide the other-title input field */
@@ -17,71 +17,53 @@ $(document).ready(function () {
         let errorElement = $();
         /* required fields */
         if ($('input#name').hasClass('validInput')) {
-            console.log($('input#name').hasClass('validInput'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('input#name').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisable');
         }
         if ($('.container input[id="mail"]').hasClass('validInput')){
-            console.log($('.container input[id="mail"]').hasClass('validInput'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('.container input[id="mail"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('select#title').hasClass('validSelection')){
-            console.log($('select#title').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('select#title').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container input[id="other-title"]').is(":visible")){
             if ($('.container input[id="other-title"]').hasClass('validInput')){
-                console.log($('.container input[id="other-title"]').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                // console.log($('.container input[id="other-title"]').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
             // do nothing
         }
         if ($('.container select[id="size"]').hasClass('validSelection')){
-            console.log($('.container select[id="size"]').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('.container select[id="size"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container select[id="design"]').hasClass('validSelection')) {
-            console.log($('.container select[id="design"]').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('.container select[id="design"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container select[id="color"]').hasClass('validSelection')) {
-            console.log($('.container select[id="color"]').hasClass('validSelection'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('.container select[id="color"]').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.activities').hasClass('validActivities')){
-            console.log($('.activities').hasClass('validActivities'));
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            // console.log($('.activities').prop('outerHTML'));
             $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container form fieldset input[id="cc-num"]').is(":visible")) {
             if ($('.container form fieldset input[id="cc-num"]').hasClass('validInput')) {
-                console.log($('.container form fieldset input[id="cc-num"]').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                // console.log($('.container form fieldset input[id="cc-num"]').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
@@ -89,10 +71,8 @@ $(document).ready(function () {
         }
         if ($('.container form fieldset input[id="zip"]').is(":visible")) {
             if ($('.container form fieldset input[id="zip"]').hasClass('validInput')) {
-                console.log($('.container form fieldset input[id="zip"]').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                // console.log($('.container form fieldset input[id="zip"]').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
@@ -100,10 +80,8 @@ $(document).ready(function () {
         }
         if ($('.container form fieldset input#cvv').is(":visible")) {
             if ($('.container form fieldset input#cvv').hasClass('validInput')) {
-                console.log($('.container form fieldset input#cvv').hasClass('validInput'));
                 $('button[type="submit"]').removeClass('btnDisabled');
             } else {
-                // console.log($('.container form fieldset input#cvv').prop('outerHTML'));
                 $('button[type="submit"]').addClass('btnDisabled');
             }
         } else {
@@ -114,13 +92,15 @@ $(document).ready(function () {
                 .prop('innerHTML', 
                 '<small class="submit-msg">Form incomplete.</small>')
                 .css('color', 'red');
+            $('button[type="submit"]').css('border', '1px solid red');
             e.preventDefault();
         } else {
+            $('button[type="submit"]').css('border', '1px solid green');
             alert('You are registered!')
         }
     });
 
-    $('input#name').change(function(){
+    $('input#name').keyup(function(){
         /* There should be an error indication for the name field */
         /* Name field can't be blank */
         if ($('input#name').val().length === 0) {
@@ -147,7 +127,7 @@ $(document).ready(function () {
     }
 
     /* If the user enters an invalid email address, an error appears as the user begins to type via the .change() function, the error disappears as soon as the user has entered a complete and correctly formatted email address. */
-    $('.container input[id="mail"]').change(function() {
+    $('.container input[id="mail"]').keyup(function() {
         if ($('.container fieldset input#mail').val().length === 0) {
             /* There should be an error indication for the email field */
             $('.container small[class="mail-msg"]')
@@ -180,7 +160,7 @@ $(document).ready(function () {
         }
     });
 
-    $('div.other-title').change(function(){
+    $('div.other-title').keyup(function(){
         if ($('.container input[id="other-title"]')
                 .val().length === 0) {
             $('.container input[id="other-title"]')
@@ -264,6 +244,16 @@ $(document).ready(function () {
 
     /* There should be an error indication for the “Register for Activities” checkboxes */
     $('.activities input[type="checkbox"]').change(function (event) {
+        const abilityArray = [];
+        $('.activities input[type = "checkbox"]')
+            .each(function () {
+                abilityArray.push($(this).prop('disabled'));
+            });
+        const checkedArray = [];
+        $('.activities input[type = "checkbox"]')
+            .each(function(){
+                checkedArray.push(($(this).prop('checked')));
+            });
         /* Must select at least one checkbox under the 
         "Register for Activities" section of the form. */
         if ($('.activities input[type=checkbox]:checked').length === 0) {
@@ -280,7 +270,6 @@ $(document).ready(function () {
                 '<small class="activity-msg">Valid.</small>')
                 .css('color', 'green');
         }
-        const abilityArray = [false, false, false, false, false, false, false];
         /* When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled. */
         if (!$(event.target).is(':checked')) {
             switch ($(event.target).prop('name')) {
@@ -309,39 +298,40 @@ $(document).ready(function () {
                 case 'npm':
                     totalCost -= 100;
                     break;
-                default:
-                    totalCost -= 100;
-                    break;
             }
         } else if ($(event.target).is(':checked')){
             /* As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300. */
             switch ($(event.target).prop('name')) {
                 case 'all':
                     totalCost += 200;
+                    abilityArray[0] = false;
                     break;
                 case 'js-frameworks':
                     totalCost += 100;
+                    abilityArray[1] = false;
                     abilityArray[3] = true;
                     break;
                 case 'js-libs':
                     totalCost += 100;
+                    abilityArray[2] = false;
                     abilityArray[4] = true;
                     break;
                 case 'express':
                     totalCost += 100;
+                    abilityArray[3] = false;
                     abilityArray[1] = true;
                     break;
                 case 'node':
                     totalCost += 100;
+                    abilityArray[4] = false;
                     abilityArray[2] = true;
                     break;
                 case 'build-tools':
+                    abilityArray[5] = false;
                     totalCost += 100;
                     break;
                 case 'npm':
-                    totalCost += 100;
-                    break;
-                default:
+                    abilityArray[6] = false;
                     totalCost += 100;
                     break;
             }
@@ -351,30 +341,37 @@ $(document).ready(function () {
 
         $(".activities input[name=all]")
             .prop('disabled', abilityArray[0])
+            .prop('checked', checkedArray[0])
             .parent()
             .css('text-decoration', abilityArray[0] ? 'line-through' : 'none');
         $(".activities input[name=js-frameworks]")
             .prop('disabled', abilityArray[1])
+            .prop('checked', checkedArray[1])
             .parent()
             .css('text-decoration', abilityArray[1] ? 'line-through' : 'none');;
         $(".activities input[name=js-libs]")
             .prop('disabled', abilityArray[2])
+            .prop('checked', checkedArray[2])
             .parent()
             .css('text-decoration', abilityArray[2] ? 'line-through' : 'none');
         $(".activities input[name=express]")
             .prop('disabled', abilityArray[3])
+            .prop('checked', checkedArray[3])
             .parent()
             .css('text-decoration', abilityArray[3] ? 'line-through' : 'none');
         $(".activities input[name=node]")
             .prop('disabled', abilityArray[4])
+            .prop('checked', checkedArray[4])
             .parent()
             .css('text-decoration', abilityArray[4] ? 'line-through' : 'none');
         $(".activities input[name=build-tools]")
             .prop('disabled', abilityArray[5])
+            .prop('checked', checkedArray[5])
             .parent()
             .css('text-decoration', abilityArray[5] ? 'line-through' : 'none');
         $(".activities input[name=npm]")
             .prop('disabled', abilityArray[6])
+            .prop('checked', checkedArray[6])
             .parent()
             .css('text-decoration', abilityArray[6] ? 'line-through' : 'none');
         $('.activities > p[id=p2]')
@@ -383,7 +380,7 @@ $(document).ready(function () {
     });
 
     /* There should be an error indication for the credit card number */
-    $('.container form fieldset input[id="cc-num"]').change(function(){
+    $('.container form fieldset input[id="cc-num"]').keyup(function(){
         /* If the selected payment option is "Credit Card," the user must supply a credit card number, a zip code, and a 3 number CVV value before the form can be submitted. If the user doesn't submit all three then one of them will not be 'valid' and the register button has preventDefault. */
         if ($(this).val().length === 0) {
             /* If the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.”*/
@@ -413,14 +410,14 @@ $(document).ready(function () {
         }
     });
     /* There should be an error indication for the zip code */
-    $('.container form fieldset input[id="zip"]').change(function(){
+    $('.container form fieldset input[id="zip"]').keyup(function(){
         /* The zipcode field should accept a 5-digit number */
         if ($(this).val().length === 5) {
             $('.container small.zip-msg')
                 .prop('innerHTML',
                 '<small class="zip-msg">Valid.</small>')
                 .css('color', 'green');
-            $('.container form fieldset input[id="zip"]')
+            $('.container input[id="zip"]')
                 .addClass('validInput');
         } else {
             $('.container small.zip-msg')
@@ -431,17 +428,19 @@ $(document).ready(function () {
     });
 
     /* There should be an error indication for the CVV */
-    $('.container form fieldset input#cvv').change(function(){
+    $('.container form fieldset input#cvv').keyup(function(){
         /* The CVV should only accept a number that is exactly 3 digits long */
         if ($(this).val().length === 3) {
             $('.container small.cvv-msg')
-            .prop('innerHTML', '<small class="zip-msg">Valid.</small>')
+            .prop('innerHTML', 
+            '<small class="cvv-msg">Valid.</small>')
             .css('color', 'green');
             $('.container form fieldset input#cvv')
                 .addClass('validInput');
         } else {
             $('.container small.cvv-msg')
-            .prop('innerHTML', '<small class="zip-msg">Must be 3-digits.</small>')
+                .prop('innerHTML', 
+                '<small class="cvv-msg">Must be 3-digits.</small>')
             .css('color', 'red');
         }  
     })
