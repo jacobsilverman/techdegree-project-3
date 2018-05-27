@@ -1,4 +1,29 @@
 $(function () {
+// VALIDATE FORM BEGINS
+function validateForm()
+{
+
+    // VALIDATE NAME BEGINS
+    var name = $('#name').val();
+    if ($('input#name').val().length === 0) {
+        $('.container small[class="name-msg"]')
+            .prop('innerHTML',
+                '<small class="name-msg">Cannot be empty.</small>');
+    } else {
+        $('input#name')
+            .css('borderColor', 'green');
+        $('.container small[class="name-msg"]')
+            .prop('innerHTML',
+                '<small class="name-msg">Valid.</small>')
+            .css('color', 'green');
+        $('input#name')
+            .addClass('validInput');
+    }
+    // VALIDATE NAME ENDS
+    return false;
+}
+// VALIDATE FORM ENDS
+
     /* When the page loads, give focus to the first text field */
     $('input:text:visible:first').focus();
     /* When the page loads, hide the other-title input field */
@@ -19,7 +44,7 @@ $(function () {
         if ($('input#name').hasClass('validInput')) {
             $('button[type="submit"]').removeClass('btnDisabled');
         } else {
-            $('button[type="submit"]').addClass('btnDisable');
+            $('button[type="submit"]').addClass('btnDisabled');
         }
         if ($('.container input[id="mail"]').hasClass('validInput')){
             $('button[type="submit"]').removeClass('btnDisabled');
@@ -122,23 +147,26 @@ $(function () {
 
     function isEmail(email) {
         /* Email field must be a validly formatted e-mail address */
-        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return regex.test(email);
     }
 
     /* If the user enters an invalid email address, an error appears as the user begins to type via the .change() function, the error disappears as soon as the user has entered a complete and correctly formatted email address. */
-    $('.container input[id="mail"]').keyup(function() {
+    function validateEmail()
+    {
         if ($('.container fieldset input#mail').val().length === 0) {
             /* There should be an error indication for the email field */
             $('.container small[class="mail-msg"]')
                 .prop('innerHTML', '<small class="mail-msg">Cannot be empty.</small>');
             $('.container input[id="mail"]')
                 .css('borderColor', 'red');
+                return false;
         } else if (!isEmail($('.container fieldset input#mail').val())) {
             $('.container small[class="mail-msg"]')
                 .prop('innerHTML', '<small class="mail-msg">Not an email format.</small>');
             $('.container input[id="mail"]')
                 .css('borderColor', 'red');
+                return false;
         } else {
             $('.container small[class="mail-msg"]')
                 .prop('innerHTML', '<small class="mail-msg">Valid.</small>')
@@ -146,6 +174,16 @@ $(function () {
             $('.container input[id="mail"]')
                 .css('borderColor', 'green')
                 .addClass('validInput');
+                return true;
+        }
+    }
+    $('.container input[id="mail"]').keyup(function() {
+        if(validateEmail())
+        {
+            console.log("Email validation passed");
+        }
+        else{
+            console.log("Email validation failed");
         }
     });
 
@@ -159,8 +197,8 @@ $(function () {
             $('div.other-title').show();
         }
     });
-
-    $('div.other-title').keyup(function(){
+    function validateOtherTitle()
+    {
         if ($('.container input[id="other-title"]')
                 .val().length === 0) {
             $('.container input[id="other-title"]')
@@ -168,6 +206,7 @@ $(function () {
             $('.container small[class="other-title-msg"]')
                 .prop('innerHTML', '<small class="other-title-msg">Cannot be empty.</small>')
                 .css('color', 'red');
+                return false;
         } else if ($('.container input[id="other-title"]')
             .val() === ' ') {
             $('.container input[id="other-title"]')
@@ -175,6 +214,7 @@ $(function () {
             $('.container small[class="other-title-msg"]')
                 .prop('innerHTML', '<small class="other-title-msg">Cannot be just space.</small>')
                 .css('color', 'red');
+                return false;
         } else {
             $('.container input[id="other-title"]')
                 .css('borderColor', 'green')
@@ -182,12 +222,16 @@ $(function () {
             $('.container small[class="other-title-msg"]')
                 .prop('innerHTML', '<small class="other-title-msg">Valid.</small>')
                 .css('color', 'green');
+                return true;
         }
+    }
+    $('div.other-title').keyup(function(){
+        validateOtherTitle();
     });
 
     /* The "T-Shirt Info” section of the form is valid when a selection has been made for each option selector. The register button can only be pressed when all sections are validated. */
-
-    $('fieldset.shirt').change(function(){
+    function validateTShirtInfo()
+    {
         if ( ($('form select[id="size"]').find(":selected").text() !== 'Select Size')
             && ($('form select[id="design"]').find(":selected").text() !== 'Select Theme')
             && ($('form select[id="color"]').find(":selected").text() !== 'Select Color') ){
@@ -200,11 +244,16 @@ $(function () {
             $('.container small.shirt-msg')
                 .prop('innerHTML', '<small class="shirt-msg">Valid.</small>')
                 .css('color', 'green');
+                return true;
         } else {
             $('.container small[class="shirt-msg"]')
                 .prop('innerHTML', '<small class="shirt-msg">Make another selection.</small>')
                 .css('color', 'red');
+                return false;
         }
+    }
+    $('fieldset.shirt').change(function(){
+        validateTShirtInfo();
         
     });
 
