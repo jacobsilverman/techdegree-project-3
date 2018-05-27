@@ -2,7 +2,6 @@ $(function () {
 // VALIDATE FORM BEGINS
 function validateForm()
 {
-
     // VALIDATE NAME BEGINS
     var name = $('#name').val();
     if ($('input#name').val().length === 0) {
