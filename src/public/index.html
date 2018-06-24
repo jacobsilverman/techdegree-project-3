@@ -6,7 +6,6 @@
 	<title>Register for Full Stack Conf</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="../style/style.css">
-  <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.6.1.css">
 </head>
 <body>
 	<div class="container">
@@ -23,12 +22,8 @@
         
         <label for="name">Name:</label>
         <input type="text" id="name" name="user_name" placeholder="Enter name">
-        <small class='name'>Enter >1 char.</small>
-        <p />
         <label for="mail">Email:</label>
-        <input type="email" id="mail" name="user_email" placeholder="Enter email (must be legit email)">
-        <small class='mail'> Enter format ***@***.***</small>
-        <p />
+        <input type="email" id="mail" name="user_email" placeholder="Enter email">
         <label for="title">Job Role</label>
         <select id="title" name="user_title">
           <option selected disabled>Select Job Role</option>
@@ -39,14 +34,11 @@
           <option value="student">Student</option>
           <option value="other">Other</option>  
         </select>
-        <p />
-        <small class='title'>Make any selection.</small>
 
         <!-- STEP 2: Job Role” section of the form: 2.1 A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu. Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field. -->
         
         <div class="other-title">
-          <input id="other-title" name="other-title" type="text" placeholder="Your Job Role (if other)">
-          <small class='other-title'>Enter >1char.</small>
+          <input id="other-title" name="other-title" type="text" placeholder="Your Job Role">
         </div>
       </fieldset>
       
@@ -63,7 +55,6 @@
             <option value="large">L</option>
             <option value="extra large">XL</option>
           </select>
-          <small class='size'>Select</small>
         </div>
 
         <div>
@@ -73,7 +64,7 @@
             <option value="js puns">Theme - JS Puns</option>
             <option value="heart js">Theme - I &#9829; JS</option>
           </select>
-          <small class='design'>Select</small>
+          
         </div>
 
         <div id="colors-js-puns" class="">
@@ -87,7 +78,6 @@
             <option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option> 
             <option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option> 
           </select>
-          <small class='color'>Select</small>
         </div>
       </fieldset>
 
@@ -100,7 +90,7 @@
         <label><input type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>          
         <label><input type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
         <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
-        <small class="activity">Select at least one.</small>
+        
       </fieldset>
       <fieldset>
         <legend>Payment Info</legend>
@@ -118,19 +108,18 @@
           <div class="col-6 col">
             <label for="cc-num">Card Number:</label>
             <input id="cc-num" name="user_cc-num" type="text" placeholder="Enter Card Number">
-            <small class="cc">13 to 16-digits.</small>
           </div>
 
           <div class="col-3 col">
             <label for="zip">Zip Code:</label>
-            <input id="zip" name="user_zip" type="text" placeholder="Zip"> 
-            <small class="zip">5-digits.</small>
+            <input id="zip" name="user_zip" type="text" placeholder="Zip">
+            
           </div>
 
           <div class="col-3 col">
             <label for="cvv">CVV:</label>
             <input id="cvv" name="user_cvv" type="text" placeholder="CVV"> 
-            <small class="cvv">3-digits.</small>
+            
           </div>
           
           <label for="exp-month">Expiration Date:</label>
@@ -168,21 +157,46 @@
         	<p>If you selected the Bitcoin option we'll take you to the Coinbase site to set up your billing information. Due to the nature of exchanging Bitcoin, all Bitcoin transactions will be final.</p>
         </div>                  
 
-      </fieldset>        
-      <small class="pay">Make any selection.</small>
-      <br>
+      </fieldset>
       <button type="submit">Register</button>
-      <p />
-      <small class="submit">Fill fields then register.</small>
+      <ol>
+        <li class='name'>Enter name >1 char.</li>
+        <li class='mail'>Enter email format ***@***.***</li>
+        <li class='title'>Make any title selection.</li>
+        <li class='other-title'>Enter other-title >1char.</li>
+        <li class='size'>
+        Make any size selection.
+        </li>
+        <li class='design'>
+        Make any design selection.
+        </li>
+        <li class='color'>
+        Make any color selection.
+        </li>
+        <li class="cc-msg">
+        Enter card number 13 to 16-digits.
+        </li>
+        <li class="activity">
+        Select at least one activity.
+        </li>
+        <li class="zip">
+        Enter 5-digits zip.
+        </li>
+        <li class="cvv">
+        Enter 3-digits cvv.
+        </li>
+        <li class="pay">
+          Make any payment selection.
+        </li>
+        <li class="submit">
+          Fill fields then register.
+        </li>
+      </ol>
     </form>
 
   </div>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script src="../app/index.js" type="text/javascript" charset="utf-8"></script>
-  <div id="qunit"></div>
-  <div id="qunit-fixture"></div>
-  <script src="https://code.jquery.com/qunit/qunit-2.6.1.js"></script>
-  <script src="../test/test.js"></script>
 </body>
 </html>
