@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Register for Full Stack Conf</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="../style/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+  <script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<div class="container">
@@ -163,7 +166,7 @@
         <li class='name'>Enter name >1 char.</li>
         <li class='mail'>Enter email format ***@***.***</li>
         <li class='title'>Make any title selection.</li>
-        <li class='other-title'>Enter other-title >1char.</li>
+        <li class='other-title' hidden>Enter other-title >1char.</li>
         <li class='size'>
         Make any size selection.
         </li>
@@ -173,30 +176,24 @@
         <li class='color'>
         Make any color selection.
         </li>
-        <li class="cc-msg">
-        Enter card number 13 to 16-digits.
-        </li>
         <li class="activity">
         Select at least one activity.
         </li>
-        <li class="zip">
-        Enter 5-digits zip.
-        </li>
-        <li class="cvv">
-        Enter 3-digits cvv.
-        </li>
-        <li class="pay">
+        <li class="pay-msg">
           Make any payment selection.
         </li>
-        <li class="submit">
-          Fill fields then register.
+        <li class="cc-msg">
+          Enter card number 13 to 16-digits.
+        </li>
+        <li class="zip-msg">
+        Enter 5-digits zip.
+        </li>
+        <li class="cvv-msg">
+        Enter 3-digits cvv.
         </li>
       </ol>
     </form>
 
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script src="../app/index.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
