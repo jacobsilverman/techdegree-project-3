@@ -1,47 +1,35 @@
 $(function () {
+
   {/* focus name input on page load */}
   $('input#name').focus();
   {/* validate input name */}
   $('input#name').keyup(function () {
-    if ($(this).val().trim()) {
-      {/* everything is valid */
-      }
-      $(this).css('background-color', 'lightgreen');
-      {/* give user feedback valid */
-      }
-      $('li.name')
-        .prop('innerHTML', '<li.name-msg>Valid name field.</li>')
-        .css('color', 'lightgreen');
-      {/* enable submit button */
-      }
-      $('button:submit').addClass('nameValid');
+    if ($(this).val().trim().length > 0) {
+      {/* everything is valid */}
+      $(this)
+        .css('background-color', 'lightgreen');
+      {/* enable submit button */}
+      $('button:submit')
+        .addClass('nameValid');
     } else {
-      $(this).css('background-color', 'salmon');
-      $('li.name')
-        .prop('innerHTML', '<li.name-msg>Invalid name field.</li.name-msg>')
-        .css('color', 'salmon');
-      $('button:submit').removeClass('nameValid');
+      $(this)
+        .css('background-color', 'salmon');
+      $('button:submit')
+        .removeClass('nameValid');
     }
   });
   $('input#mail').keyup(function () {
-
     function isEmail(input) {
       // Email field must be a validly formatted e-mail address
       var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return regex.test(input);
     }
-
-    if ($(this).val().trim() &&
+    if ($(this).val().trim().length > 0 &&
       isEmail($(this).val().trim())) {
       $(this).css('background-color', 'lightgreen');
-      $('li.mail')
-        .prop('innerHTML', '<li class="mail">Valid email field.</li>')
-        .css('color', 'lightgreen');
       $('button:submit').addClass('emailValid');
     } else {
       $(this).css('background-color', 'salmon');
-      $('li.mail')
-        .prop('innerHTML', '<li class="mail">Invalid email field.</li>');
       $('button:submit').removeClass('emailValid');
     }
   });
@@ -49,14 +37,10 @@ $(function () {
   $('div.other-title').hide();
   {/* handle title field */}
   $('select#title').change(function () {
-    $('li.title')
-      .prop('innerHTML', '<li.title>Valid title selection.</li.other-title>')
-      .css('color', 'lightgreen');
     $(this).css('background-color', 'lightgreen');
     if ($(this).find("option:selected").attr("value") === 'other') {
       $('div.other-title').show();
       $('button:submit').removeClass('jobValid');
-      $('li.other-title').show();
     } else {
       $('div.other-title').hide();
       $('button:submit').addClass('jobValid');
@@ -67,17 +51,11 @@ $(function () {
     if ($(this).val().trim()) {
       $(this)
         .css('background-color', 'lightgreen');
-      $('li.other-title')
-        .prop('innerHTML', '<li.other-title>Valid other title.</li.other-title>')
-        .css('color', 'lightgreen');
       $('button:submit').addClass('jobValid');
     } else {
       //empty string will eval to false
       $(this)
         .css('background-color', 'salmon');
-      $('li.other-title')
-        .prop('innerHTML', '<li.other-title>Invalid other title.</li.other-title>')
-        .css('color', 'salmon');
       $('button:submit').removeClass('jobValid');
     }
   });
@@ -117,27 +95,18 @@ $(function () {
   $('select#size').change(function () {
     $('button:submit').addClass('validSize');
     $(this).css('background-color', 'lightgreen');
-    $('li.size')
-      .prop('innerHTML', '<li.size>Valid size selection.</li.size>')
-      .css('color', 'lightgreen');
   });
   $('select#design').change(function () {
     $('button:submit').addClass('validDesign');
     $(this).css('background-color', 'lightgreen');
-    $('li.design')
-      .prop('innerHTML', '<li.design>Valid design selection.</li.design>')
-      .css('color', 'lightgreen');
   });
   $('select#color').change(function () {
     $('button:submit').addClass('validColor');
     $(this).css('background-color', 'lightgreen');
-    $('li.color')
-      .prop('innerHTML', '<li.color>Valid color selection.</li.color>')
-      .css('color', 'lightgreen');
   });
   $('select#size, select#design').change(function () {
-    if ($('select#size').hasClass('validSelection') &&
-      $('select#design').hasClass('validSelection')) {
+    if ($('button:submit').hasClass('validSize') &&
+      $('button:submit').hasClass('validDesign')) {
       // eval two expressions
       $('div#colors-js-puns').show();
     }
@@ -172,29 +141,23 @@ $(function () {
       }
     });
   }
+  /*
+    Must select at least one checkbox under the
+    "Register for Activities" section of the form.
+    There should be an error indication for the
+    “Register for Activities” checkboxes.
+*/
   setData()
   let totalCost = 0;
   $('.activities').append("<p id='p2'> Total Cost Will Be: $0 </p>");
   $('input[type="checkbox"]').change(function () {
     if($('input[type="checkbox"]:checked').length >= 0){
       // $(this).css('background-color', 'lightgreen');
-      $('li.activity')
-        .prop('innerHTML', '<li.color>Valid activity.</li.color>')
-        .css('color', 'lightgreen');
-    } else {
-      $('li.activity')
-        .prop('innerHTML', '<li.color>Invalid activity.</li.color>')
-        .css('color', 'salmon');
-    }
-    /*
-     Must select at least one checkbox under the
-     "Register for Activities" section of the form.
-     There should be an error indication for the
-     “Register for Activities” checkboxes.
- */
-    if ($('.activities').find($('input:checked'))) {
       $('button[type="submit"]').addClass('activitiesValid');
+    } else {
+      $('button[type="submit"]').removeClass('activitiesValid');
     }
+
     /*
         Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available. I use !currentBool when a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
     */
@@ -229,32 +192,23 @@ $(function () {
         $('div.credit-card').show();
         $('div.paypal').hide();
         $('div.bitcoin').hide();
-        $('li.cc-msg').show();
-        $('li.zip-msg').show();
-        $('li.cvv-msg').show();
-        // $('#credit-card div:after').hide();
         break;
       /* When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden. */
       case 'paypal':
         $('div.credit-card').hide();
         $('div.paypal').show();
         $('div.bitcoin').hide();
-        $('li.cc-msg').hide();
-        $('li.zip-msg').hide();
-        $('li.cvv-msg').hide();
-        $('button:submit').addClass('validCc');
-        $('button:submit').addClass('validZip');
-        $('button:submit').addClass('validCvv');
-        $('button:submit').addClass('paymentValid');
+        $('button:submit')
+          .addClass('validCc')
+          .addClass('validZip')
+          .addClass('validCvv')
+          .addClass('paymentValid');
         break;
       /* When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.*/
       case 'bitcoin':
         $('div.credit-card').hide();
         $('div.paypal').hide();
         $('div.bitcoin').show();
-        $('li.cc-msg').hide();
-        $('li.zip-msg').hide();
-        $('li.cvv-msg').hide();
         $('button:submit')
           .addClass('validCc')
           .addClass('validZip')
@@ -263,63 +217,48 @@ $(function () {
         break;
     }
 
-
   });
+
+  function isNumber(input) {
+    // card number must be number
+    var regex = /^[0-9]*$/;
+    return regex.test(input);
+  }
 
   /* There should be an error indication for the credit card number */
   $('input#cc-num').keyup(function () {
     /* If the selected payment option is "Credit Card," the user must supply a credit card number, a zip code, and a 3 number CVV value before the form can be submitted. If the user doesn't submit all three then one of them will not be 'valid' and the register button has preventDefault. */
     if ($(this).val().length === 0) {
       /* If the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.”*/
-      $('li.cc-msg')
-        .prop('innerHTML',
-          '<li.cc-msg>Please enter a credit card number.</li>');
       $('input#cc-num')
-        .css('color', 'salmon');
+        .css('background-color', 'salmon');
+      $('button:submit').removeClass('validCc');
     } else if ($(this).val().length < 13) {
       /* If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is between 13 and 16 digits long.” */
-      $('li.cc-msg')
-        .prop('innerHTML',
-          '<li.cc-msg>Please enter a number that is between 13 and 16 digits long.</li>')
-        .css('color', 'salmon');
       $('input#cc-num')
         .css('background-color', 'salmon');
       $('button:submit').removeClass('validCc');
     } else if ($(this).val().length > 16) {
-      $('li.cc-msg')
-        .prop('innerHTML',
-          '<li.cc-msg>Too long <16-digits.</li>')
-        .css('color', 'salmon');
       $('input#cc-num')
         .css('background-color', 'salmon');
       $('button:submit').removeClass('validCc');
     } else {
       /* Credit card field should only accept a number between 13 and 16 digits */
-      $('li.cc-msg')
-        .prop('innerHTML',
-          '<li.cc-msg>Valid card number.</li>')
-        .css('color', 'lightgreen');
-      $('input#cc-num')
-        .css('background-color', 'lightgreen');
-      $('button:submit').addClass('validCc');
+      if(isNumber($(this).val())){
+        $('input#cc-num')
+          .css('background-color', 'lightgreen');
+        $('button:submit').addClass('validCc');
+      }
     }
   });
   /* There should be an error indication for the zip code */
   $('input#zip').keyup(function () {
     /* The zipcode field should accept a 5-digit number */
     if ($(this).val().length === 5) {
-      $('li.zip-msg')
-        .prop('innerHTML',
-          '<li class="zip-msg">Valid zip.</li>')
-        .css('color', 'lightgreen');
       $('input#zip')
         .css('background-color', 'lightgreen');
       $('button:submit').addClass('validZip');
     } else {
-      $('li.zip-msg')
-        .prop('innerHTML',
-          '<li class="zip-msg">Must be 5-digits.</li>')
-        .css('color', 'salmon');
       $('input#zip')
         .css('background-color', 'salmon');
       $('button:submit').removeClass('validZip');
@@ -330,18 +269,12 @@ $(function () {
   $('input#cvv').keyup(function () {
     /* The CVV should only accept a number that is exactly 3 digits long */
     if ($(this).val().length === 3) {
-      $('li.cvv-msg')
-        .prop('innerHTML',
-          '<li class="cvv-msg">Valid ccv.</li>')
-        .css('color', 'lightgreen');
-      $('input#cvv')
-        .css('background-color', 'lightgreen');
-      $('button:submit').addClass('validCvv');
+      if(isNumber($(this).val())){
+        $('input#cvv')
+          .css('background-color', 'lightgreen');
+        $('button:submit').addClass('validCvv');
+      }
     } else {
-      $('li.cvv-msg')
-        .prop('innerHTML',
-          '<li class="cvv-msg">Must be 3-digits.</li>')
-        .css('color', 'salmon');
       $('input#cvv')
         .css('background-color', 'salmon');
       $('button:submit').removeClass('validCvv');
@@ -349,34 +282,28 @@ $(function () {
   });
 
   $('input#cc-num, input#zip, input#cvv').change(function () {
-    // if (Array.prototype.every.call($('input#cc-num, input#zip, input#cvv'), function (element) {
-    //   return $(element).hasClass('.validInput');
-    // })) {
 
     if( $('input#cc-num').hasClass('validInput') &&
       $('input#zip').hasClass('validInput') &&
       $('input#cvv').hasClass('validInput')) {
-      $('li.pay-msg')
-        .prop('innerHTML', '<li class="pay-msg">Valid payment.</li>')
-        .css('color', 'lightgreen');
       $('button:submit').addClass('paymentValid');
     } else {
-      $('li.pay-msg')
-        .prop('innerHTML', '<li class="pay-msg">Invalid Payment.</li>')
-        .css('color', 'salmon');
       $('button:submit').removeClass('paymentValid');
     }
   });
 
   {/* The register button can only be pressed when all sections are validated. */
   }
-  $('button:submit').click(function (e) {
-    if ($('button:submit').hasClass('nameValid', 'emailValid', 'validSize', 'validDesign', 'validColor', 'activitiesValid', 'paymentValid', 'validCc', 'validZip', 'validCvv')) {
-      console.log('COMPLETE')
-      // e.preventDefault();
+  $(document).on('click', 'button:submit', function (e) {
+    if ($('button:submit').hasClass(
+      '.nameValid.emailValid.validSize' +
+      '.validDesign.validColor.activitiesValid' +
+      '.paymentValid.validCc.validZip.validCvv')) {
+      $('button:submit').prop('disabled',false);
+      console.log('COMPLETE');
     } else {
+      $('button:submit').prop('disabled',true);
       console.log('INCOMPLETE');
-      alert('form incomplete');
       e.preventDefault();
     }
   });
