@@ -191,7 +191,6 @@ $(function () {
     if ($('input[type="checkbox"]:checked').length > 0) {
       $('.activities').addClass('activitiesValid');
     } else {
-      console.log('nothing checked')
       $('.activities').removeClass('activitiesValid');
     }
 
@@ -277,14 +276,11 @@ $(function () {
         .css('background-color', 'salmon');
       $('input#cc-num').removeClass('validCc');
     } else {
-      console.log('ccn is correct length');
       /* Credit card field should only accept a number between 13 and 16 digits */
       if (isNumber($(this).val())) {
-        console.log('ccn is number');
         $('input#cc-num')
           .css('background-color', 'lightgreen');
         $('input#cc-num').addClass('validCc');
-        console.log('ccn classList', $('input#cc-num').prop("classList"));
       }
     }
   });
@@ -295,16 +291,12 @@ $(function () {
     }
     /* The zipcode field should accept a 5-digit number */
     if ($(this).val().length === 5) {
-      console.log('zip has length 5')
       if (isNumber($(this).val())) {
-        console.log('zip is number')
         $('input#zip')
           .css('background-color', 'lightgreen');
         $('input#zip').addClass('validZip');
-        console.log('zip classList', $('input#zip').prop("classList"));
       }
     } else {
-      console.log('invalid zzzzip')
       $('input#zip')
         .css('background-color', 'salmon');
       $('input#zip').removeClass('validZip');
@@ -318,16 +310,12 @@ $(function () {
     }
     /* The CVV should only accept a number that is exactly 3 digits long */
     if ($(this).val().length === 3) {
-      console.log('cvv has length 3');
       if (isNumber($(this).val())) {
-        console.log('cvv is number')
         $('input#cvv')
           .css('background-color', 'lightgreen');
         $('input#cvv').addClass('validCvv');
-        console.log('cvv classList', $('input#cvv').prop("classList"));
       }
     } else {
-      console.log('invalid cvv')
       $('input#cvv')
         .css('background-color', 'salmon');
       $('input#cvv').removeClass('validCvv');
@@ -344,26 +332,12 @@ $(function () {
 
   function checkClasses(){
     let result = false;
-    console.log('result is false')
-    console.log('name ', $('input#name').hasClass('nameValid'));
-    console.log('email ', $('input#mail').hasClass('emailValid'));
-    console.log('job ', $('select#title').hasClass('jobValid'));
-    console.log('size ', $('select#size').hasClass('validSize'));
-    console.log('design ', $('select#design').hasClass('validDesign'));
-    console.log('card is selected ', isCreditCardSelected());
-    if (isCreditCardSelected()) {
-      console.log('cc ', $('input#cc-num').hasClass('validCc'));
-      console.log('zip ', $('input#zip').hasClass('validZip'));
-      console.log('cvv ', $('input#cvv').hasClass('validCvv'));
-    }
     if( $('input#name').hasClass('nameValid') &&
         $('input#mail').hasClass('emailValid') &&
         $('select#title').hasClass('jobValid') &&
         $('select#size').hasClass('validSize') &&
         $('select#design').hasClass('validDesign')) {
-      console.log('inside first')
       if (!isCreditCardSelected()){
-        console.log('cc-not-selected, result is true')
         result = true;
       }
 
@@ -371,11 +345,9 @@ $(function () {
         $('input#cc-num').hasClass('validCc') &&
         $('input#zip').hasClass('validZip') &&
         $('input#cvv').hasClass('validCvv')) {
-        console.log('cc-selected, cc-fields true, result true');
         result = true;
       }
     }
-    console.log('returning result is', result)
     return result;
   }
 
