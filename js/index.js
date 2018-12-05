@@ -1,17 +1,71 @@
+
+/* Start helper functions vvvvvv */
+
+function removeErrorMessage(jqueryThis){
+  if ($(jqueryThis).next().is($('small'))) {
+    $(jqueryThis).next().remove();
+  }
+}
+
+function isEmail(input) {
+  // Email field must be a validly formatted e-mail address
+  var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(input);
+}
+
+function isNumber(input) {
+  // card number must be number
+  var regex = /^[0-9]*$/;
+  return regex.test(input);
+}
+
+function isCreditCardSelected() {
+  $('select[id=payment]').css('background-color', 'lightgreen')
+  if ($('select[id=payment]').find("option:selected").attr("value").localeCompare('credit card') === 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function checkClasses(){
+  let result = false;
+  if( $('input#name').hasClass('nameValid') &&
+    $('input#mail').hasClass('emailValid') &&
+    $('select#title').hasClass('jobValid') &&
+    $('select#size').hasClass('validSize') &&
+    $('select#design').hasClass('validDesign')) {
+    if (!isCreditCardSelected()){
+      result = true;
+    }
+
+    if (isCreditCardSelected() &&
+      $('input#cc-num').hasClass('validCc') &&
+      $('input#zip').hasClass('validZip') &&
+      $('input#cvv').hasClass('validCvv')) {
+      result = true;
+    }
+  }
+  return result;
+}
+
+/* End helper functions ^^^^^^ Main code vvvvv */
+
 $(function () {
 
-  {/* focus name input on page load */
-  }
+  /* focus name input on page load */
   $('input#name').focus();
-  {/* validate input name */
-  }
+  /* hide or show field(s) */
+  $('div.other-title').hide();
+  $('div.credit-card').show();
+  $('div.paypal').hide();
+  $('div.bitcoin').hide();
+
+  /* validate input name */
   $('input#name').keyup(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
+    removeErrorMessage($(this));
     if ($(this).val().trim().length > 0) {
-      {/* everything is valid */
-      }
+      /* everything is valid */
       $(this)
         .css('background-color', 'lightgreen')
         .addClass('nameValid');
@@ -22,69 +76,54 @@ $(function () {
     }
   });
   $('input#mail').keyup(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
-
-    function isEmail(input) {
-      // Email field must be a validly formatted e-mail address
-      var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return regex.test(input);
-    }
+    removeErrorMessage($(this));
 
     if ($(this).val().trim().length > 0 &&
       isEmail($(this).val().trim())) {
-      $(this).css('background-color', 'lightgreen');
-      $('input#mail').addClass('emailValid');
+      $(this)
+        .css('background-color', 'lightgreen')
+        .addClass('emailValid');
     } else {
-      $(this).css('background-color', 'salmon');
-      $('input#mail').removeClass('emailValid');
+      $(this)
+        .css('background-color', 'salmon')
+        .removeClass('emailValid');
     }
   });
-  {/* hide the other title field */
-  }
-  $('div.other-title').hide();
-  {/* handle title field */
-  }
+  /* handle title field */
   $('select#title').change(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
-
+    removeErrorMessage($(this));
     $(this).css('background-color', 'lightgreen');
     if ($(this).find("option:selected").attr("value") === 'other') {
       $('div.other-title').show();
-      $('select#title').removeClass('jobValid');
+      $(this).removeClass('jobValid');
     } else {
       $('div.other-title').hide();
-      $('select#title').addClass('jobValid');
+      $(this).addClass('jobValid');
     }
   });
 
   $('input#other-title').keyup(function () {
+    removeErrorMessage($(this));
     if ($(this).val().trim()) {
       $(this)
-        .css('background-color', 'lightgreen');
-      $('other-title').addClass('jobValid');
+        .css('background-color', 'lightgreen')
+        .addClass('jobValid');
     } else {
       //empty string will eval to false
       $(this)
-        .css('background-color', 'salmon');
-      $('other-title').removeClass('jobValid');
+        .css('background-color', 'salmon')
+        .removeClass('jobValid');
     }
   });
-  {/* Hide the "Color" label and select menu until a T-Shirt design is selected */
-  }
+  /* Hide the "Color" label and select menu until a T-Shirt design is selected */
   $('div#colors-js-puns').hide();
   /* hide fields with JS so they appear when JS disabled */
   $('select#design').change(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
+    removeErrorMessage($(this));
     var value = $(this).find("option:selected").attr("value");
     switch (value) {
-      case "js puns": {/* For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu. eg. If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."  */
-      }
+      case "js puns":
+        /* For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu. eg. If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."  */
         $('#color').css('background-color', 'lightgreen')
         $("#color option:contains('Cornflower Blue (JS Puns shirt only)')")
           .prop('selected', true);
@@ -94,10 +133,10 @@ $(function () {
         $("#color option:contains('I ♥ JS shirt only')")
           .hide();
         break;
-      case "heart js": {/* If the user selects "Theme - I ♥ JS" then the color menu should only
+      case "heart js":
+        /* If the user selects "Theme - I ♥ JS" then the color menu should only
             display "Tomato," "Steel Blue," and "Dim Grey." */
-      }
-        $('#color').css('background-color', 'lightgreen')
+        $('#color').css('background-color', 'lightgreen');
         $("#color option:contains('Tomato (I ♥ JS shirt only)')")
           .prop('selected', true);
         $('form fieldset.shirt div#colors-js-puns').show();
@@ -107,35 +146,31 @@ $(function () {
           .show();
         break;
       default:
+        break;
     }
   });
-  {/* The "T-Shirt Info” section of the form is valid when a selection has been made for each option selector.*/
-  }
+  /* The "T-Shirt Info” section of the form is valid when a selection has been made for each option selector.*/
   $('select#size').change(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
-    $('select#size').addClass('validSize');
-    $(this).css('background-color', 'lightgreen');
+    removeErrorMessage($(this));
+    $(this)
+      .addClass('validSize')
+      .css('background-color', 'lightgreen');
   });
-
 
   $('select#design').change(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
-    $('select#design').addClass('validDesign');
-    $(this).css('background-color', 'lightgreen');
+    removeErrorMessage($(this));
+    $(this)
+      .addClass('validDesign')
+      .css('background-color', 'lightgreen');
   });
-
 
   $('select#color').change(function () {
-    if ($(this).next().is($('small'))) {
-      $(this).next().remove();
-    }
-    $('select#color').addClass('validColor');
-    $(this).css('background-color', 'lightgreen');
+    removeErrorMessage($(this));
+    $(this)
+      .addClass('validColor')
+      .css('background-color', 'lightgreen');
   });
+
   $('select#size, select#design').change(function () {
     if ($('select#size').hasClass('validSize') &&
       $('select#design').hasClass('validDesign')) {
@@ -185,9 +220,8 @@ $(function () {
   let totalCost = 0;
   $('.activities').append("<p id='p2'> Total Cost Will Be: $0 </p>");
   $('input[type="checkbox"]').change(function () {
-    if ($('.activities').next().is($('small'))) {
-      $('.activities').next().remove();
-    }
+    removeErrorMessage($('.activities'));
+
     if ($('input[type="checkbox"]:checked').length > 0) {
       $('.activities').addClass('activitiesValid');
     } else {
@@ -213,16 +247,9 @@ $(function () {
     $('.activities > p[id=p2]')
       .replaceWith("<p id='p2'> Total Cost Will Be: $" + totalCost + "</p>")
   });
-
-  $('div.credit-card').show();
-  $('div.paypal').hide();
-  $('div.bitcoin').hide();
-
   /* Display payment sections based on the payment option chosen in the select menu */
   $('select[id=payment]').change(function () {
-    if ($('select[id=payment]').next().is($('small'))) {
-      $('select[id=payment]').next().remove();
-    }
+    removeErrorMessage($(this));
     /* The "Credit Card" payment option is selected by default in html. */
     var value = $(this).find("option:selected").attr("value");
 
@@ -249,110 +276,68 @@ $(function () {
 
   });
 
-  function isNumber(input) {
-    // card number must be number
-    var regex = /^[0-9]*$/;
-    return regex.test(input);
-  }
-
   /* There should be an error indication for the credit card number */
   $('input#cc-num').keyup(function () {
-    if ($('input#cc-num').next().is($('small'))) {
-      $('input#cc-num').next().remove();
-    }
+    removeErrorMessage($(this));
     /* If the selected payment option is "Credit Card," the user must supply a credit card number, a zip code, and a 3 number CVV value before the form can be submitted. If the user doesn't submit all three then one of them will not be 'valid' and the register button has preventDefault. */
     if ($(this).val().length === 0) {
       /* If the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.”*/
-      $('input#cc-num')
-        .css('background-color', 'salmon');
-      $('input#cc-num').removeClass('validCc');
+      $(this)
+        .css('background-color', 'salmon')
+        .removeClass('validCc');
     } else if ($(this).val().length < 13) {
       /* If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is between 13 and 16 digits long.” */
-      $('input#cc-num')
-        .css('background-color', 'salmon');
-      $('input#cc-num').removeClass('validCc');
+      $(this)
+        .css('background-color', 'salmon')
+        .removeClass('validCc');
     } else if ($(this).val().length > 16) {
-      $('input#cc-num')
-        .css('background-color', 'salmon');
-      $('input#cc-num').removeClass('validCc');
+      $(this)
+        .css('background-color', 'salmon')
+        .removeClass('validCc');
     } else {
       /* Credit card field should only accept a number between 13 and 16 digits */
       if (isNumber($(this).val())) {
-        $('input#cc-num')
-          .css('background-color', 'lightgreen');
-        $('input#cc-num').addClass('validCc');
+        $(this)
+          .css('background-color', 'lightgreen')
+          .addClass('validCc');
       }
     }
   });
   /* There should be an error indication for the zip code */
   $('input#zip').keyup(function () {
-    if ($('input#zip').next().is($('small'))) {
-      $('input#zip').next().remove();
-    }
+    removeErrorMessage($(this));
     /* The zipcode field should accept a 5-digit number */
     if ($(this).val().length === 5) {
       if (isNumber($(this).val())) {
-        $('input#zip')
-          .css('background-color', 'lightgreen');
-        $('input#zip').addClass('validZip');
+        $(this)
+          .css('background-color', 'lightgreen')
+          .addClass('validZip');
       }
     } else {
-      $('input#zip')
-        .css('background-color', 'salmon');
-      $('input#zip').removeClass('validZip');
+      $(this)
+        .css('background-color', 'salmon')
+        .removeClass('validZip');
     }
   });
 
   /* There should be an error indication for the CVV */
   $('input#cvv').keyup(function () {
-    if ($('input#cvv').next().is($('small'))) {
-      $('input#cvv').next().remove();
-    }
+    removeErrorMessage($(this));
     /* The CVV should only accept a number that is exactly 3 digits long */
     if ($(this).val().length === 3) {
       if (isNumber($(this).val())) {
-        $('input#cvv')
-          .css('background-color', 'lightgreen');
-        $('input#cvv').addClass('validCvv');
+        $(this)
+          .css('background-color', 'lightgreen')
+          .addClass('validCvv');
       }
     } else {
-      $('input#cvv')
-        .css('background-color', 'salmon');
-      $('input#cvv').removeClass('validCvv');
+      $(this)
+        .css('background-color', 'salmon')
+        .removeClass('validCvv');
     }
   });
 
-  function isCreditCardSelected() {
-    if ($('select[id=payment]').find("option:selected").attr("value").localeCompare('credit card') === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  function checkClasses(){
-    let result = false;
-    if( $('input#name').hasClass('nameValid') &&
-        $('input#mail').hasClass('emailValid') &&
-        $('select#title').hasClass('jobValid') &&
-        $('select#size').hasClass('validSize') &&
-        $('select#design').hasClass('validDesign')) {
-      if (!isCreditCardSelected()){
-        result = true;
-      }
-
-      if (isCreditCardSelected() &&
-        $('input#cc-num').hasClass('validCc') &&
-        $('input#zip').hasClass('validZip') &&
-        $('input#cvv').hasClass('validCvv')) {
-        result = true;
-      }
-    }
-    return result;
-  }
-
-  {/* The register button can only be pressed when all sections are validated. */
-  }
+  /* The register button can only be pressed when all sections are validated. */
   $(document).on('click', 'button:submit', function (e) {
 
     if (checkClasses()) {
@@ -372,9 +357,16 @@ $(function () {
         }
       }
       if (!$('select#title').hasClass('jobValid')){
-        if (!$('select#title').next().is($('small'))){
-          $('select#title')
-            .after($('<small>Make a title selection.</small>').css('color','red'));
+        if($('select#title').find("option:selected").attr("value") === 'other'){
+          if (!$('input#other-title').next().is($('small'))) {
+            $('input#other-title')
+              .after($('<small>Input job role.</small>').css('color','red'));
+          }
+        } else {
+          if (!$('select#title').next().is($('small'))){
+            $('select#title')
+              .after($('<small>Make a title selection.</small>').css('color','red'));
+          }
         }
       }
       if (!$('select#size').hasClass('validSize')){
@@ -397,7 +389,7 @@ $(function () {
       }
 
       if(isCreditCardSelected()){
-        if (!$('input#cc-num').hasClass('validCc')){
+        if (!$('input#cc-nums').hasClass('validCc')){
           if (!$('input#cc-num').next().is($('small'))){
             $('input#cc-num')
               .after($('<small>Invalid number.</small>').css('color','red'));
