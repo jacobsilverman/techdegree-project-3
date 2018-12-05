@@ -1,60 +1,63 @@
 $(function () {
 
-  {/* focus name input on page load */}
+  {/* focus name input on page load */
+  }
   $('input#name').focus();
-  {/* validate input name */}
+  {/* validate input name */
+  }
   $('input#name').keyup(function () {
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
     if ($(this).val().trim().length > 0) {
-      {/* everything is valid */}
+      {/* everything is valid */
+      }
       $(this)
-        .css('background-color', 'lightgreen');
-      {/* enable submit button */}
-      $('button:submit')
+        .css('background-color', 'lightgreen')
         .addClass('nameValid');
     } else {
       $(this)
-        .css('background-color', 'salmon');
-      $('button:submit')
+        .css('background-color', 'salmon')
         .removeClass('nameValid');
     }
   });
   $('input#mail').keyup(function () {
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
+
     function isEmail(input) {
       // Email field must be a validly formatted e-mail address
       var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return regex.test(input);
     }
+
     if ($(this).val().trim().length > 0 &&
       isEmail($(this).val().trim())) {
       $(this).css('background-color', 'lightgreen');
-      $('button:submit').addClass('emailValid');
+      $('input#mail').addClass('emailValid');
     } else {
       $(this).css('background-color', 'salmon');
-      $('button:submit').removeClass('emailValid');
+      $('input#mail').removeClass('emailValid');
     }
   });
-  {/* hide the other title field */}
+  {/* hide the other title field */
+  }
   $('div.other-title').hide();
-  {/* handle title field */}
+  {/* handle title field */
+  }
   $('select#title').change(function () {
-    console.log('next title',$(this).next());
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
 
     $(this).css('background-color', 'lightgreen');
     if ($(this).find("option:selected").attr("value") === 'other') {
       $('div.other-title').show();
-      $('button:submit').removeClass('jobValid');
+      $('select#title').removeClass('jobValid');
     } else {
       $('div.other-title').hide();
-      $('button:submit').addClass('jobValid');
+      $('select#title').addClass('jobValid');
     }
   });
 
@@ -62,12 +65,12 @@ $(function () {
     if ($(this).val().trim()) {
       $(this)
         .css('background-color', 'lightgreen');
-      $('button:submit').addClass('jobValid');
+      $('other-title').addClass('jobValid');
     } else {
       //empty string will eval to false
       $(this)
         .css('background-color', 'salmon');
-      $('button:submit').removeClass('jobValid');
+      $('other-title').removeClass('jobValid');
     }
   });
   {/* Hide the "Color" label and select menu until a T-Shirt design is selected */
@@ -75,13 +78,14 @@ $(function () {
   $('div#colors-js-puns').hide();
   /* hide fields with JS so they appear when JS disabled */
   $('select#design').change(function () {
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
     var value = $(this).find("option:selected").attr("value");
     switch (value) {
       case "js puns": {/* For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu. eg. If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."  */
       }
+        $('#color').css('background-color', 'lightgreen')
         $("#color option:contains('Cornflower Blue (JS Puns shirt only)')")
           .prop('selected', true);
         $('div#colors-js-puns').show();
@@ -93,6 +97,7 @@ $(function () {
       case "heart js": {/* If the user selects "Theme - I ♥ JS" then the color menu should only
             display "Tomato," "Steel Blue," and "Dim Grey." */
       }
+        $('#color').css('background-color', 'lightgreen')
         $("#color option:contains('Tomato (I ♥ JS shirt only)')")
           .prop('selected', true);
         $('form fieldset.shirt div#colors-js-puns').show();
@@ -107,33 +112,38 @@ $(function () {
   {/* The "T-Shirt Info” section of the form is valid when a selection has been made for each option selector.*/
   }
   $('select#size').change(function () {
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
-    $('button:submit').addClass('validSize');
+    $('select#size').addClass('validSize');
     $(this).css('background-color', 'lightgreen');
   });
+
+
   $('select#design').change(function () {
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
-    $('button:submit').addClass('validDesign');
+    $('select#design').addClass('validDesign');
     $(this).css('background-color', 'lightgreen');
   });
+
+
   $('select#color').change(function () {
-    if ($(this).next().is($('small'))){
+    if ($(this).next().is($('small'))) {
       $(this).next().remove();
     }
-    $('button:submit').addClass('validColor');
+    $('select#color').addClass('validColor');
     $(this).css('background-color', 'lightgreen');
   });
   $('select#size, select#design').change(function () {
-    if ($('button:submit').hasClass('validSize') &&
-      $('button:submit').hasClass('validDesign')) {
+    if ($('select#size').hasClass('validSize') &&
+      $('select#design').hasClass('validDesign')) {
       // eval two expressions
       $('div#colors-js-puns').show();
     }
   });
+
 
   function setData() {
     $('.activities').data("checkbox", {
@@ -164,26 +174,25 @@ $(function () {
       }
     });
   }
+
   /*
     Must select at least one checkbox under the
     "Register for Activities" section of the form.
     There should be an error indication for the
     “Register for Activities” checkboxes.
 */
-  setData()
+  setData();
   let totalCost = 0;
   $('.activities').append("<p id='p2'> Total Cost Will Be: $0 </p>");
   $('input[type="checkbox"]').change(function () {
-    if ($('.activities').next().is($('small'))){
+    if ($('.activities').next().is($('small'))) {
       $('.activities').next().remove();
     }
-    console.log($('input[type="checkbox"]:checked').length);
-    if($('input[type="checkbox"]:checked').length > 0){
-      console.log('next is', $('.activities').next().is($('small')))
-      $('button[type="submit"]').addClass('activitiesValid');
+    if ($('input[type="checkbox"]:checked').length > 0) {
+      $('.activities').addClass('activitiesValid');
     } else {
       console.log('nothing checked')
-      $('button[type="submit"]').removeClass('activitiesValid');
+      $('.activities').removeClass('activitiesValid');
     }
 
     /*
@@ -211,12 +220,13 @@ $(function () {
   $('div.bitcoin').hide();
 
   /* Display payment sections based on the payment option chosen in the select menu */
-  $(' fieldset select[id=payment]').change(function () {
-    if ($('select[id=payment]').next().is($('small'))){
+  $('select[id=payment]').change(function () {
+    if ($('select[id=payment]').next().is($('small'))) {
       $('select[id=payment]').next().remove();
     }
     /* The "Credit Card" payment option is selected by default in html. */
     var value = $(this).find("option:selected").attr("value");
+
     switch (value) {
       /* When the "Credit Card" payment option is selected display the #credit-card div, and hide the "Paypal" and "Bitcoin information. */
       case 'credit card':
@@ -229,22 +239,12 @@ $(function () {
         $('div.credit-card').hide();
         $('div.paypal').show();
         $('div.bitcoin').hide();
-        $('button:submit')
-          .addClass('validCc')
-          .addClass('validZip')
-          .addClass('validCvv')
-          .addClass('paymentValid');
         break;
       /* When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.*/
       case 'bitcoin':
         $('div.credit-card').hide();
         $('div.paypal').hide();
         $('div.bitcoin').show();
-        $('button:submit')
-          .addClass('validCc')
-          .addClass('validZip')
-          .addClass('validCvv');
-        $('button:submit').addClass('paymentValid');
         break;
     }
 
@@ -258,7 +258,7 @@ $(function () {
 
   /* There should be an error indication for the credit card number */
   $('input#cc-num').keyup(function () {
-    if ($('input#cc-num').next().is($('small'))){
+    if ($('input#cc-num').next().is($('small'))) {
       $('input#cc-num').next().remove();
     }
     /* If the selected payment option is "Credit Card," the user must supply a credit card number, a zip code, and a 3 number CVV value before the form can be submitted. If the user doesn't submit all three then one of them will not be 'valid' and the register button has preventDefault. */
@@ -266,159 +266,185 @@ $(function () {
       /* If the user hasn’t entered a credit card number and the field is completely blank, the error message reads “Please enter a credit card number.”*/
       $('input#cc-num')
         .css('background-color', 'salmon');
-      $('button:submit').removeClass('validCc');
+      $('input#cc-num').removeClass('validCc');
     } else if ($(this).val().length < 13) {
       /* If the field isn’t empty but contains only 10 numbers, the error message reads “Please enter a number that is between 13 and 16 digits long.” */
       $('input#cc-num')
         .css('background-color', 'salmon');
-      $('button:submit').removeClass('validCc');
+      $('input#cc-num').removeClass('validCc');
     } else if ($(this).val().length > 16) {
       $('input#cc-num')
         .css('background-color', 'salmon');
-      $('button:submit').removeClass('validCc');
+      $('input#cc-num').removeClass('validCc');
     } else {
+      console.log('ccn is correct length');
       /* Credit card field should only accept a number between 13 and 16 digits */
-      if(isNumber($(this).val())){
+      if (isNumber($(this).val())) {
+        console.log('ccn is number');
         $('input#cc-num')
           .css('background-color', 'lightgreen');
-        $('button:submit').addClass('validCc');
+        $('input#cc-num').addClass('validCc');
+        console.log('ccn classList', $('input#cc-num').prop("classList"));
       }
     }
   });
   /* There should be an error indication for the zip code */
   $('input#zip').keyup(function () {
-    if ($('input#zip').next().is($('small'))){
+    if ($('input#zip').next().is($('small'))) {
       $('input#zip').next().remove();
     }
     /* The zipcode field should accept a 5-digit number */
     if ($(this).val().length === 5) {
-      if(isNumber($(this).val())) {
+      console.log('zip has length 5')
+      if (isNumber($(this).val())) {
+        console.log('zip is number')
         $('input#zip')
           .css('background-color', 'lightgreen');
-        $('button:submit').addClass('validZip');
+        $('input#zip').addClass('validZip');
+        console.log('zip classList', $('input#zip').prop("classList"));
       }
     } else {
+      console.log('invalid zzzzip')
       $('input#zip')
         .css('background-color', 'salmon');
-      $('button:submit').removeClass('validZip');
+      $('input#zip').removeClass('validZip');
     }
   });
 
   /* There should be an error indication for the CVV */
   $('input#cvv').keyup(function () {
-    if ($('input#cvv').next().is($('small'))){
+    if ($('input#cvv').next().is($('small'))) {
       $('input#cvv').next().remove();
     }
     /* The CVV should only accept a number that is exactly 3 digits long */
     if ($(this).val().length === 3) {
-      if(isNumber($(this).val())){
+      console.log('cvv has length 3');
+      if (isNumber($(this).val())) {
+        console.log('cvv is number')
         $('input#cvv')
           .css('background-color', 'lightgreen');
-        $('button:submit').addClass('validCvv');
+        $('input#cvv').addClass('validCvv');
+        console.log('cvv classList', $('input#cvv').prop("classList"));
       }
     } else {
+      console.log('invalid cvv')
       $('input#cvv')
         .css('background-color', 'salmon');
-      $('button:submit').removeClass('validCvv');
+      $('input#cvv').removeClass('validCvv');
     }
   });
 
-  $('input#cc-num, input#zip, input#cvv').change(function () {
-    if ($(this).next().is($('small'))){
-      $(this).next().remove();
-    }
-    if( $('input#cc-num').hasClass('validInput') &&
-      $('input#zip').hasClass('validInput') &&
-      $('input#cvv').hasClass('validInput')) {
-      $('button:submit').addClass('paymentValid');
+  function isCreditCardSelected() {
+    if ($('select[id=payment]').find("option:selected").attr("value").localeCompare('credit card') === 0) {
+      return true;
     } else {
-      $('button:submit').removeClass('paymentValid');
+      return false;
     }
-  });
+  }
+
+  function checkClasses(){
+    let result = false;
+    console.log('result is false')
+    console.log('name ', $('input#name').hasClass('nameValid'));
+    console.log('email ', $('input#mail').hasClass('emailValid'));
+    console.log('job ', $('select#title').hasClass('jobValid'));
+    console.log('size ', $('select#size').hasClass('validSize'));
+    console.log('design ', $('select#design').hasClass('validDesign'));
+    console.log('card is selected ', isCreditCardSelected());
+    if (isCreditCardSelected()) {
+      console.log('cc ', $('input#cc-num').hasClass('validCc'));
+      console.log('zip ', $('input#zip').hasClass('validZip'));
+      console.log('cvv ', $('input#cvv').hasClass('validCvv'));
+    }
+    if( $('input#name').hasClass('nameValid') &&
+        $('input#mail').hasClass('emailValid') &&
+        $('select#title').hasClass('jobValid') &&
+        $('select#size').hasClass('validSize') &&
+        $('select#design').hasClass('validDesign')) {
+      console.log('inside first')
+      if (!isCreditCardSelected()){
+        console.log('cc-not-selected, result is true')
+        result = true;
+      }
+
+      if (isCreditCardSelected() &&
+        $('input#cc-num').hasClass('validCc') &&
+        $('input#zip').hasClass('validZip') &&
+        $('input#cvv').hasClass('validCvv')) {
+        console.log('cc-selected, cc-fields true, result true');
+        result = true;
+      }
+    }
+    console.log('returning result is', result)
+    return result;
+  }
 
   {/* The register button can only be pressed when all sections are validated. */
   }
   $(document).on('click', 'button:submit', function (e) {
-    e.preventDefault();
 
-    if ($('button:submit').hasClass(
-      '.nameValid.emailValid.validSize' +
-      '.validDesign.validColor.activitiesValid' +
-      '.paymentValid.validCc.validZip.validCvv')) {
-      $('button:submit').prop('disabled',false);
-      console.log('COMPLETE');
+    if (checkClasses()) {
+        console.log('COMPLETE');
     } else {
-      console.log($('button:submit').prop("classList"))
-      if (!$('button:submit').hasClass('nameValid')){
+      e.preventDefault();
+      if (!$('input#name').hasClass('nameValid')){
         if (!$('input#name').next().is($('small'))){
           $('input#name')
             .after($('<small>Invalid name field.</small>').css('color','red'));
         }
       }
-      if (!$('button:submit').hasClass('emailValid')){
+      if (!$('input#mail').hasClass('emailValid')){
         if (!$('input#mail').next().is($('small'))){
           $('input#mail')
             .after($('<small>Invalid email field.</small>').css('color','red'));
         }
       }
-      if (!$('button:submit').hasClass('jobValid')){
+      if (!$('select#title').hasClass('jobValid')){
         if (!$('select#title').next().is($('small'))){
           $('select#title')
             .after($('<small>Make a title selection.</small>').css('color','red'));
         }
       }
-      if (!$('button:submit').hasClass('validSize')){
+      if (!$('select#size').hasClass('validSize')){
         if (!$('select#size').next().is($('small'))){
           $('select#size')
             .after($('<small>Make any size selection.</small>').css('color','red'));
         }
       }
-      if (!$('button:submit').hasClass('validDesign')){
+      if (!$('select#design').hasClass('validDesign')){
         if (!$('select#design').next().is($('small'))){
           $('select#design')
             .after($('<small>Make any design selection.</small>').css('color','red'));
         }
       }
-      if (!$('button:submit').hasClass('validColor')){
-        if (!$('select#color').next().is($('small'))){
-          $('select#color')
-            .after($('<small>Make any color selection.</small>').css('color','red'));
-        }
-      }
-      if (!$('button:submit').hasClass('activitiesValid')){
+      if (!$('.activities').hasClass('activitiesValid')){
         if (!$('.activities').next().is($('small'))){
           $('.activities')
             .after($('<small>Check one.</small>').css('color','red'));
         }
       }
-      // if (!$('button:submit').hasClass('paymentValid')){
-      //   if (!$('select[id=payment]').next().is($('small'))){
-      //     $('select[id=payment]')
-      //       .after($('<small>Select one.</small>').css('color','red'));
-      //   }
-      // }
-      if (!$('button:submit').hasClass('validCc')){
-        if (!$('input#cc-num').next().is($('small'))){
-          $('input#cc-num')
-            .after($('<small>Invalid number.</small>').css('color','red'));
-        }
-      }
-      if (!$('button:submit').hasClass('validZip')){
-        if (!$('input#zip').next().is($('small'))){
-          $('input#zip')
-            .after($('<small>Invalid Zip.</small>').css('color','red'));
-        }
-      }
-      if (!$('button:submit').hasClass('validCvv')){
-        if (!$('input#cvv').next().is($('small'))){
-          $('input#cvv')
-            .after($('<small>Invalid Cvv.</small>').css('color','red'));
-        }
-      }
 
-      // $('button:submit').prop('disabled',true);
+      if(isCreditCardSelected()){
+        if (!$('input#cc-num').hasClass('validCc')){
+          if (!$('input#cc-num').next().is($('small'))){
+            $('input#cc-num')
+              .after($('<small>Invalid number.</small>').css('color','red'));
+          }
+        }
+        if (!$('input#zip').hasClass('validZip')){
+          if (!$('input#zip').next().is($('small'))){
+            $('input#zip')
+              .after($('<small>Invalid Zip.</small>').css('color','red'));
+          }
+        }
+        if (!$('input#cvv').hasClass('validCvv')){
+          if (!$('input#cvv').next().is($('small'))){
+            $('input#cvv')
+              .after($('<small>Invalid Cvv.</small>').css('color','red'));
+          }
+        }
+      }
       console.log('INCOMPLETE');
     }
   });
-
 });
